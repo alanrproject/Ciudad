@@ -1,3 +1,4 @@
+import json
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
@@ -8,9 +9,20 @@ def report(token):
         'Authorization':f'Bearer {token}',
         'Partner-Id':'Ciudad'
     }
+  
+  body_data = {
+        "account_start": "11050501",
+        "account_end": "41750503",
+        "year": 2023,
+        "month_start": 1,
+        "month_end": 13,
+        "includes_tax_difference": False
+    }
+  
+  encoded_body = json.dumps(body_data).encode('utf-8')
 
     # Make a request to the API endpoint that requires the access token
-  request = Request('https://api.siigo.com/v1/products?created_start=2021-02-17', headers=headers)
+  request = Request('https://api.siigo.com/v1/test-balance-report', headers=headers, data=encoded_body)
     
   try:
       response = urlopen(request)
@@ -23,26 +35,3 @@ def report(token):
       print('Body:', error_body)
   except URLError as e:
       print('URL Error:', e.reason)
-
-
-
-      # values = """
-  #   {
-  #     "account_start": "\"11050501\"",
-  #     "account_end": "\"41350501\"",
-  #     "year": 2023,
-  #     "month_start": 1,
-  #     "month_end": 13,
-  #     "includes_tax_difference": false
-  #   }
-  # """
-
-  # headers = {
-  #   'Content-Type': 'application/json',
-  #   'Authorization': '[access_token]',
-  #   'Partner-Id': 'Ciudad'
-  # }
-  # request = Request('https://api.siigo.com/v1/test-balance-report', data=values, headers=headers)
-
-  # response_body = urlopen(request).read()
-  # return response_body
