@@ -3,7 +3,30 @@ from urllib.error import URLError, HTTPError
 
 
 def report(token):
-  # values = """
+  headers = {
+        'Content-Type':'application/json',
+        'Authorization':f'Bearer {token}',
+        'Partner-Id':'Ciudad'
+    }
+
+    # Make a request to the API endpoint that requires the access token
+  request = Request('https://api.siigo.com/v1/products?created_start=2021-02-17', headers=headers)
+    
+  try:
+      response = urlopen(request)
+      response_body = response.read().decode()
+      print(response_body)
+  except HTTPError as e:
+      error_body = e.read().decode()
+      print('HTTP Error:', e.code, e.reason)
+      print('Headers:', e.headers)
+      print('Body:', error_body)
+  except URLError as e:
+      print('URL Error:', e.reason)
+
+
+
+      # values = """
   #   {
   #     "account_start": "\"11050501\"",
   #     "account_end": "\"41350501\"",
@@ -23,22 +46,3 @@ def report(token):
 
   # response_body = urlopen(request).read()
   # return response_body
-  headers = {
-        'Authorization': f'Bearer {token}',
-        'Content-Type': 'application/json'
-    }
-
-    # Make a request to the API endpoint that requires the access token
-  request = Request('https://api.siigo.com/v1/test-balance-report', headers=headers)
-    
-  try:
-      response = urlopen(request)
-      response_body = response.read().decode()
-      print(response_body)
-  except HTTPError as e:
-      error_body = e.read().decode()
-      print('HTTP Error:', e.code, e.reason)
-      print('Headers:', e.headers)
-      print('Body:', error_body)
-  except URLError as e:
-      print('URL Error:', e.reason)

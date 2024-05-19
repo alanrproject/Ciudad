@@ -1,28 +1,28 @@
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
-
 def oauth():
-  values = """
+    values = """
     {
       "username": "drendon@ciudadrenovable.com",
-      "access_key": "MTRmYzRkYmQtMTU5MC00MmY2LWE3M2MtMzM0NmEwMGQwYzYzOmt4diFqVyEyUEM="
+      "access_key": "MjMzNzNiMzUtMDNiNS00ZGRlLTkyNDYtOGQ0MDdjNzY2MDUyOj9UOSxidCw2LEI="
     }
-  """
+    """
 
-  headers = {
-    'Content-Type': 'application/json',
-    'Partner-Id': 'Ciudad'
-  }
+    headers = {
+        'Content-Type': 'application/json',
+        'Partner-Id': 'Ciudad'
+    }
 
-  request = Request('https://api.siigo.com/auth', data=values.encode(), headers=headers)
+    request = Request('https://api.siigo.com/auth', data=values.encode(), headers=headers)
+    
+    try:
+        response = urlopen(request)
+        response_body = response.read()
+        return response_body.decode()
+    except HTTPError as e:
+        return print('HTTP Error:', e.code, e.reason)
+    except URLError as e:
+        return print('URL Error:', e.reason)
 
-  try:
-      response = urlopen(request)
-      response_body = response.read()
-      return print(response_body)
-  except HTTPError as e:
-      return print('HTTP Error:', e.code, e.reason)
-  except URLError as e:
-      return print('URL Error:', e.reason)
    

@@ -11,7 +11,7 @@
         "env": {
           "PYTHONPATH": "${workspaceFolder}"
         },
-        "python": "/usr/bin/python3",  // Path to the Python interpreter in WSL
+        "python": "/env/bin/python3",  // Path to the Python interpreter in WSL
         "internalConsoleOptions": "neverOpen",
         "timeout": 30000  // Increase the timeout value as needed
       }
