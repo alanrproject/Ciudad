@@ -27,7 +27,7 @@ def report(token):
   try:
       response = urlopen(request)
       response_body = response.read().decode()
-      print(response_body)
+      return response_body
   except HTTPError as e:
       error_body = e.read().decode()
       print('HTTP Error:', e.code, e.reason)
